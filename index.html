@@ -87,9 +87,41 @@ main{max-width:960px;margin:0 auto;padding:0 16px 90px;position:relative;z-index
 .svc-nm{font-family:'Playfair Display',serif;font-size:.98rem;font-weight:600;margin-bottom:5px;line-height:1.3}
 .svc-ds{font-size:.74rem;color:var(--muted);line-height:1.55;margin-bottom:12px;font-weight:300}
 .svc-ft{display:flex;justify-content:space-between;align-items:flex-end;border-top:1px solid var(--bg4);padding-top:10px}
-.svc-pr{
-  :'Playfair Display',serif;font-size:1.12rem;color:var(--gold-l);font-weight:500}
+.svc-pr{font-family:'Playfair Display',serif;font-size:.92rem;color:var(--gold-l);font-weight:500;font-style:italic}
 .svc-fr{font-size:.62rem;color:var(--dim);text-transform:uppercase;letter-spacing:.07em;text-align:right;line-height:1.4}
+
+.svc.destacada{
+  grid-column:1/-1;
+  border:1.5px solid var(--gold);
+  background:linear-gradient(160deg,var(--bg2),rgba(201,168,76,.05));
+  box-shadow:0 0 0 1px rgba(201,168,76,.15),0 10px 34px rgba(201,168,76,.12);
+  padding-top:34px;
+}
+.svc.destacada::before{background:linear-gradient(135deg,var(--gold-g),transparent)}
+.svc.destacada:hover{border-color:var(--gold-l);transform:translateY(-4px)}
+.svc.destacada .svc-chk{background:var(--gold);color:var(--deep)}
+.svc-ribbon{
+  position:absolute;top:0;left:0;
+  background:linear-gradient(135deg,var(--gold),var(--gold-l));
+  color:var(--deep);
+  font-size:.6rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:6px 16px 6px 14px;
+  border-bottom-right-radius:12px;
+}
+.svc.destacada .svc-ico{font-size:1.9rem}
+.svc.destacada .svc-nm{font-size:1.25rem}
+.svc.destacada .svc-ds{font-size:.82rem;max-width:520px}
+.svc-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.svc-tag{
+  font-size:.62rem;letter-spacing:.03em;
+  border:1px solid rgba(201,168,76,.4);
+  color:var(--gold-l);
+  padding:4px 10px;border-radius:20px;
+  background:rgba(201,168,76,.06);
+}
+@media(max-width:600px){
+  .svc.destacada{padding-top:30px}
+}
 
 .cal-wrap{background:var(--bg2);border:1px solid var(--bg4);border-radius:var(--r);padding:22px;margin-bottom:14px}
 .cal-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
@@ -230,49 +262,60 @@ textarea{resize:vertical;min-height:72px;line-height:1.5}
   <div class="ss">Seleccioná el espacio que más te resuene</div>
   <div class="svcs">
 
-    <div class="svc" onclick="selSvc(this,'Terapia Coaching',25000,'1 hora')">
+    <div class="svc" onclick="selSvc(this,'Terapia Coaching','1 hora')">
       <div class="svc-chk">✓</div>
       <span class="svc-ico">🧠</span>
       <div class="svc-cat">Terapia · Bienestar</div>
       <div class="svc-nm">Terapia Coaching</div>
       <div class="svc-ds">Sesión individual de psicología y coaching. Un espacio seguro para tu proceso de transformación personal y emocional.</div>
-      <div class="svc-ft"><span class="svc-pr">$25.000</span><span class="svc-fr">1 hora<br>por sesión</span></div>
+      <div class="svc-ft"><span class="svc-pr">Consultar valor</span><span class="svc-fr">1 hora<br>por sesión</span></div>
     </div>
 
-    <div class="svc" onclick="selSvc(this,'Clases de Psicología Coaching',60000,'Mensual')">
+    <div class="svc" onclick="selSvc(this,'Clases de Psicología Coaching','Mensual')">
       <div class="svc-chk">✓</div>
       <span class="svc-ico">📚</span>
       <div class="svc-cat">Formación · Aprendizaje</div>
       <div class="svc-nm">Clases de Psicología Coaching</div>
       <div class="svc-ds">Formación mensual en psicología aplicada al coaching. Herramientas concretas para tu desarrollo profesional y personal.</div>
-      <div class="svc-ft"><span class="svc-pr">$60.000</span><span class="svc-fr">Mensual<br>1 vez al mes</span></div>
+      <div class="svc-ft"><span class="svc-pr">Consultar valor</span><span class="svc-fr">Mensual<br>1 vez al mes</span></div>
     </div>
 
-    <div class="svc" onclick="selSvc(this,'Clases de Parapsicología',65000,'Mensual')">
+    <div class="svc" onclick="selSvc(this,'Clases de Parapsicología','Mensual')">
       <div class="svc-chk">✓</div>
       <span class="svc-ico">🔮</span>
       <div class="svc-cat">Espiritualidad · Formación</div>
       <div class="svc-nm">Clases de Parapsicología</div>
       <div class="svc-ds">Exploración de fenómenos más allá de la psicología convencional. Consciencia expandida y percepción extrasensorial.</div>
-      <div class="svc-ft"><span class="svc-pr">$65.000</span><span class="svc-fr">Mensual<br>1 vez al mes</span></div>
+      <div class="svc-ft"><span class="svc-pr">Consultar valor</span><span class="svc-fr">Mensual<br>1 vez al mes</span></div>
     </div>
 
-    <div class="svc" onclick="selSvc(this,'Clases de Astrología Dracónica',56000,'Mensual')">
+    <div class="svc" onclick="selSvc(this,'Clases de Astrología Dracónica','Mensual')">
       <div class="svc-chk">✓</div>
       <span class="svc-ico">🐉</span>
       <div class="svc-cat">Astrología · Alma</div>
       <div class="svc-nm">Clases de Astrología Dracónica</div>
       <div class="svc-ds">El mapa del alma. Aprendé a leer la carta dracónica, misión de vida y heridas kármicas.</div>
-      <div class="svc-ft"><span class="svc-pr">$56.000</span><span class="svc-fr">Mensual<br>1 vez al mes</span></div>
+      <div class="svc-ft"><span class="svc-pr">Consultar valor</span><span class="svc-fr">Mensual<br>1 vez al mes</span></div>
     </div>
 
-    <div class="svc" onclick="selSvc(this,'Turno de Cartas — Dracónica, Sinastría & Registros Akáshicos',40000,'60–90 min')">
+    <div class="svc destacada" onclick="selSvc(this,'Carta Astral Dracónica Interactiva','Acceso 12 meses')">
+      <div class="svc-ribbon">✦ Nuestra especialidad</div>
       <div class="svc-chk">✓</div>
       <span class="svc-ico">🌟</span>
-      <div class="svc-cat">Lecturas · Registros Akáshicos</div>
-      <div class="svc-nm">Turno de Cartas</div>
-      <div class="svc-ds">Lecturas de cartas Dracónica, Sinastría, Vidas Pasadas, Vínculos Kármicos y Registros Akáshicos.</div>
-      <div class="svc-ft"><span class="svc-pr">$40.000</span><span class="svc-fr">60–90 min<br>por turno</span></div>
+      <div class="svc-cat">Lecturas · Experiencia Completa</div>
+      <div class="svc-nm">Carta Astral Dracónica Interactiva</div>
+      <div class="svc-ds">Mucho más que una carta astral: una experiencia personalizada con acceso durante todo un año, para comprender tus ciclos y potenciar tus decisiones.</div>
+      <div class="svc-tags">
+        <span class="svc-tag">Carta Dracónica</span>
+        <span class="svc-tag">Sinastría</span>
+        <span class="svc-tag">Vidas Pasadas</span>
+        <span class="svc-tag">Vínculos Kármicos</span>
+        <span class="svc-tag">Registros Akáshicos</span>
+        <span class="svc-tag">Calendario interactivo</span>
+        <span class="svc-tag">Tarot interactivo</span>
+        <span class="svc-tag">10 preguntas personalizadas</span>
+      </div>
+      <div class="svc-ft"><span class="svc-pr">Consultar valor</span><span class="svc-fr">Acceso 12 meses<br>desde celular o PC</span></div>
     </div>
 
   </div>
@@ -335,7 +378,7 @@ textarea{resize:vertical;min-height:72px;line-height:1.5}
       <div class="sum-r"><span class="l">Paciente</span><span class="v" id="s-nom">—</span></div>
       <div class="sum-r"><span class="l">Duración</span><span class="v" id="s-dur">—</span></div>
     </div>
-    <div class="sum-tot"><span class="l">Total</span><span class="v" id="s-pre">—</span></div>
+    <div class="sum-tot"><span class="l">Valor</span><span class="v" id="s-pre" style="font-size:.9rem;font-style:italic">Se coordina por WhatsApp</span></div>
   </div>
   <div class="pay-box">
     <div class="pay-hdr">
@@ -366,7 +409,7 @@ textarea{resize:vertical;min-height:72px;line-height:1.5}
   <div class="ok-card">
     <div class="ok-ico">✦</div>
     <h2>¡Turno confirmado!</h2>
-    <p>Anna te contactará para coordinar los detalles. También podés escribirle por WhatsApp.</p>
+    <p>Anna te contactará para coordinar los detalles y el valor. También podés escribirle por WhatsApp.</p>
     <div class="cc" id="cod-c">TRN-0000</div>
     <div class="ok-det" id="ok-det"></div>
     <div style="display:flex;flex-direction:column;gap:10px">
@@ -393,8 +436,8 @@ textarea{resize:vertical;min-height:72px;line-height:1.5}
   }
 })();
 
-const S={svc:null,precio:0,dur:'',fecha:null,hora:null,nom:'',ape:'',em:'',tel:''};
-const WA='5491100000000'; // ← Reemplazar con número real de Anna
+const S={svc:null,dur:'',fecha:null,hora:null,nom:'',ape:'',em:'',tel:''};
+const WA='5493412585119';
 let curM,curY;
 
 const HOR={
@@ -412,10 +455,10 @@ const DIAS=['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
 
 function init(){const n=new Date();curM=n.getMonth();curY=n.getFullYear();renderCal()}
 
-function selSvc(card,nombre,precio,dur){
+function selSvc(card,nombre,dur){
   document.querySelectorAll('.svc').forEach(c=>c.classList.remove('sel'));
   card.classList.add('sel');
-  S.svc=nombre;S.precio=precio;S.dur=dur;
+  S.svc=nombre;S.dur=dur;
   setTimeout(()=>goP(2),260);
 }
 
@@ -510,7 +553,6 @@ function fillSum(){
   document.getElementById('s-hor').textContent=S.hora||'—';
   document.getElementById('s-nom').textContent=`${S.nom} ${S.ape}`;
   document.getElementById('s-dur').textContent=S.dur||'—';
-  document.getElementById('s-pre').textContent=`$${S.precio.toLocaleString('es-AR')}`;
 }
 
 function confirmar(){
@@ -520,7 +562,7 @@ function confirmar(){
   const fs=f?`${f.getDate()} de ${MESmin[f.getMonth()]} de ${f.getFullYear()}`:'—';
   document.getElementById('ok-det').innerHTML=`
     <div class="dp"><div class="dp-l">Servicio</div><div class="dp-v">${S.svc}</div></div>
-    <div class="dp"><div class="dp-l">Total</div><div class="dp-v" style="color:var(--gold-l)">$${S.precio.toLocaleString('es-AR')}</div></div>
+    <div class="dp"><div class="dp-l">Duración</div><div class="dp-v">${S.dur}</div></div>
     <div class="dp"><div class="dp-l">Fecha</div><div class="dp-v">${fs}</div></div>
     <div class="dp"><div class="dp-l">Hora</div><div class="dp-v">${S.hora}</div></div>
   `;
@@ -534,12 +576,11 @@ function waConfirm(){
     `¡Hola Anna! 🌟 Quiero reservar un turno.\n\n`+
     `📌 *Servicio:* ${S.svc||'consultar'}\n`+
     `📅 *Fecha:* ${fs}\n`+
-    `🕐 *Hora:* ${S.hora||'a coordinar'}\n`+
-    `💰 *Total:* $${S.precio.toLocaleString('es-AR')}\n\n`+
+    `🕐 *Hora:* ${S.hora||'a coordinar'}\n\n`+
     `👤 *Nombre:* ${S.nom} ${S.ape}\n`+
-    `📱 *Tel:* 5493412585119${S.tel}\n`+
+    `📱 *Tel:* ${S.tel}\n`+
     `📧 *Email:* ${S.em}\n\n`+
-    `Quedo a la espera. ¡Gracias! ✦`
+    `Quedo a la espera de coordinar el valor. ¡Gracias! ✦`
   );
   window.open(`https://wa.me/${WA}?text=${msg}`,'_blank');
 }
@@ -548,7 +589,7 @@ function fmtCard(el){let v=el.value.replace(/\D/g,'').slice(0,16);el.value=v.rep
 function fmtExp(el){let v=el.value.replace(/\D/g,'');if(v.length>=2)v=v.slice(0,2)+'/'+v.slice(2,4);el.value=v}
 
 function resetAll(){
-  Object.assign(S,{svc:null,precio:0,dur:'',fecha:null,hora:null,nom:'',ape:'',em:'',tel:''});
+  Object.assign(S,{svc:null,dur:'',fecha:null,hora:null,nom:'',ape:'',em:'',tel:''});
   document.querySelectorAll('.svc').forEach(c=>c.classList.remove('sel'));
   document.getElementById('slot-cont').innerHTML='<div class="no-d">Seleccioná una fecha para ver los horarios ✦</div>';
   init();goP(1);
