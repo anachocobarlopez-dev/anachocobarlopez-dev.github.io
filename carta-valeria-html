@@ -22,6 +22,23 @@ body{font-family:'Jost',sans-serif;background:var(--deep);color:var(--text);min-
 .o1{width:550px;height:550px;background:rgba(123,94,167,.1);top:-120px;left:-180px}
 .o2{width:380px;height:380px;background:rgba(201,168,76,.07);bottom:-80px;right:-80px}
 
+/* --- UNIVERSO: planetas flotando + estrellas fugaces --- */
+#universo{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.planeta-flot{position:absolute;border-radius:50%;animation:flotar linear infinite;}
+@keyframes flotar{
+  0%{transform:translate(0,0) rotate(0deg)}
+  50%{transform:translate(var(--dx,30px),var(--dy,-40px)) rotate(180deg)}
+  100%{transform:translate(0,0) rotate(360deg)}
+}
+.fugaz{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;
+  box-shadow:0 0 6px 1px #fff;opacity:0;animation:cruzar linear infinite;}
+@keyframes cruzar{
+  0%{opacity:0;transform:translate(0,0)}
+  2%{opacity:1}
+  14%{opacity:0;transform:translate(240px,150px)}
+  100%{opacity:0;transform:translate(240px,150px)}
+}
+
 main{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:0 18px 70px}
 
 /* HERO */
@@ -141,10 +158,6 @@ h1{font-family:'Playfair Display',serif;font-weight:600;font-size:clamp(1.7rem,7
 .retro-tag{font-size:.7rem;border:1px solid var(--gold);color:var(--gold-l);padding:5px 12px;border-radius:20px;background:rgba(201,168,76,.06)}
 
 /* ============ CALENDARIO ASTROLOGICO + TAROT (integrado) ============ */
-/* =========================================================
-   CALENDARIO ASTROLÓGICO PERSONAL
-   Paleta: negro profundo, violeta, dorado — místico moderno
-   ========================================================= */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --cal-negro:#0a0a0d;
@@ -165,55 +178,22 @@ h1{font-family:'Playfair Display',serif;font-weight:600;font-size:clamp(1.7rem,7
   --cal-c-precaucion:#e89a3c;
   --cal-c-desafiante:#e2555a;
 }
-html{scroll-behavior:smooth}
-body{
-  font-family:'Jost',sans-serif;
-  background:
-    radial-gradient(ellipse at top, #1a1720 0%, var(--cal-negro) 60%),
-    var(--cal-negro);
-  color:var(--cal-texto);
-  min-height:100vh;
-  padding-bottom:50px;
-}
 
-/* --- Estrellas de fondo --- */
-#stars{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-.s{position:absolute;border-radius:50%;background:#fff;animation:tw var(--d) ease-in-out infinite var(--dl)}
-@keyframes tw{0%,100%{opacity:.05;transform:scale(1)}50%{opacity:.55;transform:scale(1.3)}}
-
-/* --- Header --- */
-header{
+/* --- Header calendario --- */
+.cal-header{
   position:relative;z-index:1;
   text-align:center;
   padding:44px 18px 30px;
   border-bottom:1px solid rgba(207,166,70,.2);
 }
-.sello{
-  width:56px;height:56px;margin:0 auto 16px;
-  border:1px solid var(--cal-dorado);border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:22px;color:var(--cal-dorado-suave);
-  box-shadow:0 0 22px rgba(207,166,70,.2);
-}
-.eyebrow{font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--cal-vio-suave);margin-bottom:8px}
-h1{
-  font-family:'Cormorant Garamond',serif;font-weight:600;
-  font-size:clamp(1.7rem,7vw,2.4rem);color:var(--cal-dorado-suave);
-}
-.sub{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--cal-tenue);font-size:.9rem;margin-top:6px}
-
-main{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:26px 16px}
-
-/* --- Navegación de mes --- */
 .mes-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
 .mes-nav button{
   background:var(--cal-negro3);border:1px solid rgba(138,99,210,.35);color:var(--cal-vio-suave);
   width:36px;height:36px;border-radius:50%;font-size:1rem;cursor:pointer;transition:all .2s;
 }
 .mes-nav button:hover{background:var(--cal-vio-g);border-color:var(--cal-vio)}
-.mes-nav .titulo{font-family:'Cormorant Garamond',serif;font-size:1.25rem;text-transform:capitalize;color:var(--cal-texto)}
+.mes-nav .titulo{font-family:'Playfair Display',serif;font-size:1.25rem;text-transform:capitalize;color:var(--cal-texto)}
 
-/* --- Grilla --- */
 .grilla{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:20px}
 .dia-nombre{text-align:center;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--cal-tenue);padding:4px 0}
 .dia{
@@ -228,7 +208,6 @@ main{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:26px 16px
 .dia.hoy{border-color:var(--cal-dorado);box-shadow:0 0 0 1px var(--cal-dorado)}
 .dia.sin-datos .num{color:var(--cal-tenue)}
 
-/* --- Leyenda --- */
 .leyenda{
   background:var(--cal-negro2);border:1px solid rgba(255,255,255,.06);border-radius:14px;
   padding:16px 18px;margin-bottom:24px;
@@ -263,7 +242,7 @@ main{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:26px 16px
   background:var(--cal-negro2);border:1px solid rgba(255,255,255,.1);color:var(--cal-tenue);
   cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;
 }
-.modal-fecha{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--cal-dorado-suave);margin-bottom:2px;padding-right:30px}
+.modal-fecha{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--cal-dorado-suave);margin-bottom:2px;padding-right:30px}
 .modal-fecha-sub{font-size:.72rem;color:var(--cal-tenue);text-transform:capitalize;margin-bottom:18px}
 
 .energia-badge{
@@ -307,8 +286,8 @@ main{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:26px 16px
 .tarot-seccion{margin-top:34px;padding-top:30px;border-top:1px solid rgba(207,166,70,.2)}
 .tarot-header{text-align:center;margin-bottom:20px}
 .tarot-eyebrow{font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--cal-vio-suave);margin-bottom:8px}
-.tarot-titulo{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:1.4rem;color:var(--cal-dorado-suave)}
-.tarot-sub{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--cal-tenue);font-size:.85rem;margin-top:4px}
+.tarot-titulo{font-family:'Playfair Display',serif;font-weight:600;font-size:1.4rem;color:var(--cal-dorado-suave)}
+.tarot-sub{font-family:'Playfair Display',serif;font-style:italic;color:var(--cal-tenue);font-size:.85rem;margin-top:4px}
 
 .tirada-selector{display:flex;gap:10px;justify-content:center;margin-bottom:22px;flex-wrap:wrap}
 .tirada-btn{
@@ -335,14 +314,14 @@ main{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:26px 16px
 .carta-frente{background:linear-gradient(165deg,#241f30,var(--cal-negro));transform:rotateY(180deg)}
 .carta-frente .num{font-size:.55rem;letter-spacing:.1em;color:var(--cal-vio-suave);margin-bottom:4px}
 .carta-frente .sim{font-size:1.3rem;margin-bottom:4px;color:var(--cal-dorado-suave)}
-.carta-frente .nom{font-family:'Cormorant Garamond',serif;font-size:.72rem;font-weight:600;color:var(--cal-dorado-suave);line-height:1.15}
+.carta-frente .nom{font-family:'Playfair Display',serif;font-size:.72rem;font-weight:600;color:var(--cal-dorado-suave);line-height:1.15}
 
 .tarot-resultado{background:var(--cal-negro2);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:16px 18px;display:none}
 .tarot-resultado.activo{display:block}
 .tarot-resultado-fila{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.05)}
 .tarot-resultado-fila:last-child{border-bottom:none}
 .tarot-resultado-fila .pos{font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--cal-vio-suave);width:78px;flex-shrink:0;padding-top:2px}
-.tarot-resultado-fila .info b{display:block;font-family:'Cormorant Garamond',serif;font-size:.95rem;color:var(--cal-dorado-suave);margin-bottom:2px}
+.tarot-resultado-fila .info b{display:block;font-family:'Playfair Display',serif;font-size:.95rem;color:var(--cal-dorado-suave);margin-bottom:2px}
 .tarot-resultado-fila .info p{font-size:.78rem;line-height:1.5;color:var(--cal-tenue)}
 
 .tarot-btn-nueva{
@@ -355,6 +334,7 @@ main{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:26px 16px
 <body>
 
 <div id="stars"></div>
+<div id="universo"></div>
 <div class="orb o1"></div><div class="orb o2"></div>
 
 <main>
@@ -415,7 +395,6 @@ main{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:26px 16px
   <div class="seccion-title">Tu Carta Dracónica</div>
   <div class="seccion-desc">Acá cambia casi todo: esta es la carta del alma, la misión que traés de antes de nacer. Compará cuánto se aleja de tu personalidad natal — ahí está la clave de tu proceso.</div>
 
-  <!-- Sol / Luna / Asc dracónico -->
   <div class="acordeon-item abierto">
     <div class="acordeon-cab" onclick="toggle(this)">
       <div class="acordeon-ico">☉</div>
@@ -432,7 +411,6 @@ main{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:26px 16px
     </div>
   </div>
 
-  <!-- Planetas -->
   <div class="acordeon-item">
     <div class="acordeon-cab" onclick="toggle(this)">
       <div class="acordeon-ico">☿</div>
@@ -460,7 +438,6 @@ main{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:26px 16px
     </div>
   </div>
 
-  <!-- Nodos y Lilith -->
   <div class="acordeon-item">
     <div class="acordeon-cab" onclick="toggle(this)">
       <div class="acordeon-ico">☊</div>
@@ -476,7 +453,6 @@ main{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:26px 16px
     </div>
   </div>
 
-  <!-- Casas -->
   <div class="acordeon-item">
     <div class="acordeon-cab" onclick="toggle(this)">
       <div class="acordeon-ico">⌂</div>
@@ -493,7 +469,6 @@ main{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:26px 16px
     </div>
   </div>
 
-  <!-- Elementos y Modalidades -->
   <div class="acordeon-item">
     <div class="acordeon-cab" onclick="toggle(this)">
       <div class="acordeon-ico">◆</div>
@@ -521,7 +496,6 @@ main{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:26px 16px
     </div>
   </div>
 
-  <!-- Aspectos -->
   <div class="acordeon-item">
     <div class="acordeon-cab" onclick="toggle(this)">
       <div class="acordeon-ico">⟡</div>
@@ -538,7 +512,6 @@ main{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:26px 16px
     </div>
   </div>
 
-  <!-- Retrogradacion -->
   <div class="acordeon-item">
     <div class="acordeon-cab" onclick="toggle(this)">
       <div class="acordeon-ico">℞</div>
@@ -562,7 +535,6 @@ main{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:26px 16px
     </div>
   </div>
 
-  <!-- Regente, Fortuna y Configuracion especial -->
   <div class="acordeon-item">
     <div class="acordeon-cab" onclick="toggle(this)">
       <div class="acordeon-ico">✺</div>
@@ -573,19 +545,13 @@ main{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:26px 16px
       <div class="flecha">▾</div>
     </div>
     <div class="acordeon-cuerpo" style="max-height:900px">
-
       <p><strong>Regente de la carta: Venus.</strong> Como el Ascendente dracónico está en Tauro, Venus se convierte en el "director de orquesta" de toda la carta — el planeta que más condiciona cómo se despliegan los demás. Y Venus, en esta carta, está en Virgo y Casa 6: el amor propio y el modo de vincularse de Valeria se filtran por el servicio, el detalle y el cuidado cotidiano.</p>
-
       <p><strong>Parte de la Fortuna dracónica: Géminis, Casa 3.</strong> Este punto marca dónde el alma encuentra bienestar y alineación de forma más natural — para Valeria, en la comunicación, el aprendizaje constante y los vínculos cercanos (hermanos, entorno inmediato). Escribir, conversar, enseñar o intercambiar ideas no es solo una habilidad: es una fuente real de "buena fortuna" para su equilibrio interior.</p>
-
       <p><strong>Configuración especial: una gran concentración en la Casa 6.</strong> Al mirar todos los puntos de la carta, aparece algo notable: Venus, Marte, Eris e Ícaro en Virgo, más el Nodo Sur, Mercurio, Quirón, Chariklo y el Vertex en Libra — todos cayendo en la <strong>Casa 6</strong>. Es una verdadera acumulación de energía en un solo sector de la carta.</p>
-
       <p>Esto convierte al eje "trabajo — servicio — cuidado del cuerpo — rutina" en el centro de gravedad real de toda la encarnación de Valeria. Prácticamente todo lo que le pasa a nivel de alma —sus vínculos (Venus, Quirón, Chariklo), su forma de actuar (Marte), su manera de pensar (Mercurio), incluso su punto de destino (Vertex)— se termina expresando a través de esa casa. No es casual que su vocación de sanación (Quirón) y su necesidad de equilibrio (Libra) se concentren justo ahí: la Casa 6 es, literalmente, donde más "pasa" en su carta dracónica.</p>
-
     </div>
   </div>
 
-  <!-- Asteroides — destacado -->
   <div class="acordeon-item abierto" style="border-color:var(--gold)">
     <div class="acordeon-cab" onclick="toggle(this)">
       <div class="acordeon-ico">✧</div>
@@ -776,28 +742,21 @@ main{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:26px 16px
       <div class="flecha">▾</div>
     </div>
     <div class="acordeon-cuerpo" style="max-height:1400px">
-
       <p><strong>¿Qué es Quirón?</strong> Es el asteroide del "sanador herido": representa la herida más profunda del alma, aquella que no se cura del todo pero que, al ser comprendida y trabajada, se convierte en la mayor fuente de sabiduría y capacidad de acompañar a otros. No es una herida para "curar y olvidar", sino una herida para integrar.</p>
-
       <p><strong>Tu Quirón dracónico: Libra, Casa 6.</strong> La herida del alma de Valeria tiene que ver con el equilibrio: haber aprendido a dar, servir y cuidar (casa 6) muchas veces a costa de su propia armonía y de decir lo que realmente necesita (Libra). Es probable que en algún momento haya sentido que "cuidar" era sinónimo de "desaparecer un poco a sí misma" — o que la justicia y el equilibrio los buscaba afuera, en el otro, antes que adentro.</p>
-
       <p><strong>Cómo entenderla:</strong> No es una falla de carácter ni algo "para arreglar" — es una herida de origen, algo con lo que el alma ya vino a esta vida. Entenderla significa dejar de verla como un defecto ("soy demasiado complaciente", "no sé poner límites") y empezar a verla como una maestra: cada vez que Valeria se descubre acomodándose de más para no generar conflicto, ahí está Quirón mostrándole dónde todavía falta integrarse a sí misma.</p>
-
       <p><strong>Cómo trabajarla:</strong></p>
       <p>— Poner en palabras (hablado o escrito) los momentos donde se posterga a sí misma "para mantener la paz", sin juzgarse por hacerlo.<br>
       — Practicar micro-límites cotidianos: decir una preferencia propia en voz alta antes de acomodarse a la del otro.<br>
       — Trabajar el cuerpo y la rutina (casa 6) como territorio de autocuidado real, no solo de servicio a otros: descanso, alimentación, tiempos propios.<br>
       — Rituales simbólicos de "balanza interna" — literalmente pensar en una balanza y preguntarse, ante cada decisión: ¿esto me incluye a mí también?</p>
-
       <p><strong>Qué tipo de terapia o acompañamiento puede ayudar:</strong> dado que la herida es relacional y de equilibrio, suelen resultar especialmente afines los abordajes que trabajan el vínculo con una misma tanto como el vínculo con otros:</p>
       <p>— <strong>Terapia gestáltica</strong>, por su foco en el aquí-y-ahora y en reconocer necesidades propias antes que ajenas.<br>
       — <strong>Constelaciones familiares</strong>, para ver de dónde viene el patrón de "cuidar sin recibir".<br>
       — <strong>Terapias corporales o somáticas</strong> (bioenergética, danza-terapia), porque la casa 6 pide integración a través del cuerpo, no solo de la palabra.<br>
       — Espacios de <strong>coaching de límites y asertividad</strong>, complementando lo emocional con herramientas prácticas concretas.<br>
       — Y, como marco de fondo, un <strong>proceso de acompañamiento psicológico continuo</strong> — no una solución única, sino un trabajo sostenido en el tiempo, que es justamente lo que esta herida necesita.</p>
-
       <p style="font-style:italic;color:var(--gold-l);margin-top:6px">Cuando Valeria sane este punto, no solo va a poner mejores límites: va a convertirse — como Quirón lo promete — en una guía natural para otros que atraviesan lo mismo.</p>
-
     </div>
   </div>
 
@@ -1103,18 +1062,20 @@ main{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:26px 16px
   <div class="cierre">
     <p>"Lo que tu personalidad natal construye, tu alma dracónica lo profundiza."</p>
     <div class="firma">Academia PsicoTranspersonal · Anna Chocobar</div>
+    <div style="margin-top:16px;display:flex;flex-wrap:wrap;justify-content:center;gap:14px;font-size:.75rem">
+      <a href="https://wa.me/5493412585119" style="color:var(--gold-l);text-decoration:none">✆ WhatsApp</a>
+      <a href="https://anachocobarlopez-dev.github.io" style="color:var(--gold-l);text-decoration:none">✦ Mi web</a>
+      <a href="https://instagram.com/academiapsicologiacoaching" style="color:var(--gold-l);text-decoration:none">◈ Instagram</a>
+    </div>
   </div>
 
-
   <!-- ============ CALENDARIO ASTROLOGICO + TAROT ============ -->
-<header>
-  <div class="sello">✦</div>
-  <div class="eyebrow">Guía diaria</div>
-  <h1>Calendario Astrológico Personal</h1>
-  <div class="sub">Tocá cualquier día para ver su energía</div>
-</header>
-
-<main>
+  <header class="cal-header">
+    <div class="sello">✦</div>
+    <div class="eyebrow">Guía diaria</div>
+    <h1>Calendario Astrológico Personal</h1>
+    <div class="sub">Tocá cualquier día para ver su energía</div>
+  </header>
 
   <div class="mes-nav">
     <button onclick="cambiarMes(-1)">‹</button>
@@ -1152,7 +1113,11 @@ main{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:26px 16px
   </div>
 
 </main>
-</main>
+
+<!-- MODAL DEL CALENDARIO — esto es lo que faltaba -->
+<div class="overlay" id="overlay" onclick="cerrarSiFondo(event)">
+  <div class="modal" id="modalContenido"></div>
+</div>
 
 <script>
 (function(){
@@ -1162,6 +1127,47 @@ main{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:26px 16px
     const sz=Math.random()*1.8+0.4;
     s.style.cssText=`width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--d:${2+Math.random()*5}s;--dl:${-Math.random()*5}s`;
     c.appendChild(s);
+  }
+})();
+
+/* --- Universo cósmico: planetas flotando + estrellas fugaces --- */
+(function(){
+  const u = document.getElementById('universo');
+  const coloresPlaneta = [
+    'radial-gradient(circle at 30% 30%, #E2C47A, #9C7A2C)',
+    'radial-gradient(circle at 30% 30%, #A882D4, #4B3572)',
+    'radial-gradient(circle at 30% 30%, #C47A9E, #6E3A50)',
+    'radial-gradient(circle at 30% 30%, #7BA8D4, #2C4E72)',
+    'radial-gradient(circle at 30% 30%, #E8E8E8, #8A8A9A)'
+  ];
+  const nPlanetas = 6;
+  for(let i=0;i<nPlanetas;i++){
+    const p = document.createElement('div');
+    p.className = 'planeta-flot';
+    const size = 10 + Math.random()*26;
+    const top = Math.random()*90;
+    const left = Math.random()*90;
+    const dx = (Math.random()*80-40).toFixed(0)+'px';
+    const dy = (Math.random()*80-40).toFixed(0)+'px';
+    const dur = 18 + Math.random()*22;
+    const delay = -Math.random()*20;
+    const color = coloresPlaneta[i % coloresPlaneta.length];
+    p.style.cssText = `width:${size}px;height:${size}px;top:${top}%;left:${left}%;background:${color};
+      box-shadow:0 0 ${size*0.9}px ${size*0.25}px rgba(201,168,76,.28), inset -4px -4px ${size*0.4}px rgba(0,0,0,.45);
+      --dx:${dx};--dy:${dy};animation-duration:${dur}s;animation-delay:${delay}s;opacity:${0.55+Math.random()*0.35}`;
+    u.appendChild(p);
+  }
+
+  const nFugaces = 5;
+  for(let i=0;i<nFugaces;i++){
+    const f = document.createElement('div');
+    f.className = 'fugaz';
+    const top = Math.random()*60;
+    const left = Math.random()*60;
+    const dur = 6 + Math.random()*6;
+    const delay = -Math.random()*12;
+    f.style.cssText = `top:${top}%;left:${left}%;animation-duration:${dur}s;animation-delay:${delay}s`;
+    u.appendChild(f);
   }
 })();
 
@@ -1220,6 +1226,7 @@ const SIGNOS = [
 
 function renderSignos(){
   const grid = document.getElementById('signosGrid');
+  if(!grid) return;
   SIGNOS.forEach((sg, i)=>{
     const btn = document.createElement('div');
     btn.className = 'signo-btn';
@@ -1228,9 +1235,8 @@ function renderSignos(){
     grid.appendChild(btn);
   });
 }
-
 function mostrarSigno(i, btn){
-  document.querySelectorAll('.signo-btn').forEach(b=>b.classList.remove('activo'));
+  document.querySelectorAll('#signosGrid .signo-btn').forEach(b=>b.classList.remove('activo'));
   btn.classList.add('activo');
   const sg = SIGNOS[i];
   const box = document.getElementById('signoResultado');
@@ -1248,36 +1254,97 @@ function mostrarSigno(i, btn){
       <p style="font-size:.78rem;line-height:1.6;color:var(--muted)"><strong style="color:var(--gold-l);font-weight:500">${sg.p}:</strong> ${sg.plan}</p>
     </div>`;
 }
-
 renderSignos();
 
-// ============ CALENDARIO ASTROLOGICO + TAROT (JS) ============
-/* =========================================================
-   1) MOTOR ASTRONÓMICO — calcula Sol y Luna para CUALQUIER
-   fecha, de cualquier año, para siempre. No hace falta
-   cargar tablas nunca más.
+// --- CASAS DRACONICAS ---
+const CASAS = [
+  {num:1, signo:'Tauro', sig:'Identidad y cuerpo', desc:'Cómo el alma se presenta al mundo — en Tauro, con estabilidad y calma sensorial.'},
+  {num:2, signo:'Géminis', sig:'Recursos y valores', desc:'Lo que da seguridad material — en Géminis, ligado a ideas, palabras y variedad de recursos.'},
+  {num:3, signo:'Cáncer', sig:'Comunicación y entorno cercano', desc:'El vínculo con hermanos y el barrio — en Cáncer, con tono emocional y protector.'},
+  {num:4, signo:'Leo', sig:'Hogar y raíces', desc:'La base familiar — en Leo, un hogar donde también se busca brillar y ser reconocida.'},
+  {num:5, signo:'Virgo', sig:'Creatividad y placer', desc:'La expresión personal — en Virgo, con detalle, servicio y autoexigencia creativa.'},
+  {num:6, signo:'Libra', sig:'Trabajo y rutina', desc:'El área más activa de esta carta — servicio, cuerpo y equilibrio (Quirón vive acá).'},
+  {num:7, signo:'Escorpio', sig:'Vínculos y sociedad', desc:'La pareja y el otro — en Escorpio, con intensidad, transformación y entrega total.'},
+  {num:8, signo:'Sagitario', sig:'Transformación y lo compartido', desc:'Lo que se comparte con otros — en Sagitario, buscando sentido incluso en las crisis.'},
+  {num:9, signo:'Capricornio', sig:'Filosofía y expansión', desc:'La búsqueda de sentido — en Capricornio, a través de la disciplina y la estructura (acá vive la Luna).'},
+  {num:10, signo:'Acuario', sig:'Vocación pública', desc:'La proyección profesional — en Acuario, con un rol distinto o vinculado a lo colectivo.'},
+  {num:11, signo:'Piscis', sig:'Comunidad y proyectos', desc:'Los grupos y sueños compartidos — en Piscis, con sensibilidad e idealismo.'},
+  {num:12, signo:'Aries', sig:'Lo oculto y espiritual', desc:'El territorio interno más profundo — en Aries, camino de valentía y del Nodo Norte.'},
+];
+function renderCasas(){
+  const grid = document.getElementById('casasGrid');
+  if(!grid) return;
+  CASAS.forEach((c,i)=>{
+    const btn = document.createElement('div');
+    btn.className = 'signo-btn';
+    btn.style.fontSize = '.85rem';
+    btn.textContent = c.num;
+    btn.onclick = ()=> mostrarCasa(i, btn);
+    grid.appendChild(btn);
+  });
+}
+function mostrarCasa(i, btn){
+  document.querySelectorAll('#casasGrid .signo-btn').forEach(b=>b.classList.remove('activo'));
+  btn.classList.add('activo');
+  const c = CASAS[i];
+  const box = document.getElementById('casaResultado');
+  box.classList.remove('vacio');
+  box.innerHTML = `
+    <div class="signo-res-nombre">Casa ${c.num} · ${c.signo}</div>
+    <div style="text-align:left;margin-top:10px">
+      <p style="font-size:.78rem;line-height:1.6;color:var(--muted);margin-bottom:8px"><strong style="color:var(--gold-l);font-weight:500">Representa:</strong> ${c.sig}</p>
+      <p style="font-size:.78rem;line-height:1.6;color:var(--muted)">${c.desc}</p>
+    </div>`;
+}
+renderCasas();
 
-   Fórmulas de posición aproximada (precisión ~1-3°, más que
-   suficiente para saber signo y fase). Basadas en algoritmos
-   astronómicos estándar (Meeus, "Astronomical Algorithms").
-   ========================================================= */
+// --- ASPECTOS ---
+const ASPECTOS = [
+  {sim:'☌', nombre:'Conjunción', desc:'Dos energías fusionadas en un mismo punto — se potencian y a veces se confunden entre sí.'},
+  {sim:'⚹', nombre:'Sextil', desc:'Una conversación fácil y colaborativa entre dos planetas — oportunidades que fluyen con poco esfuerzo.'},
+  {sim:'□', nombre:'Cuadratura', desc:'Tensión productiva — fricción que empuja a la acción y al crecimiento, aunque incomode.'},
+  {sim:'△', nombre:'Trígono', desc:'Armonía natural — talento que fluye casi sin esfuerzo, aunque a veces se da por sentado.'},
+  {sim:'☍', nombre:'Oposición', desc:'Dos polos que se miran de frente — piden integrar y equilibrar en vez de elegir uno solo.'},
+];
+function renderAspectos(){
+  const grid = document.getElementById('aspectosGrid');
+  if(!grid) return;
+  ASPECTOS.forEach((a,i)=>{
+    const btn = document.createElement('div');
+    btn.className = 'signo-btn';
+    btn.textContent = a.sim;
+    btn.onclick = ()=> mostrarAspecto(i, btn);
+    grid.appendChild(btn);
+  });
+}
+function mostrarAspecto(i, btn){
+  document.querySelectorAll('#aspectosGrid .signo-btn').forEach(b=>b.classList.remove('activo'));
+  btn.classList.add('activo');
+  const a = ASPECTOS[i];
+  const box = document.getElementById('aspectoResultado');
+  box.classList.remove('vacio');
+  box.innerHTML = `
+    <div class="signo-res-simbolo">${a.sim}</div>
+    <div class="signo-res-nombre">${a.nombre}</div>
+    <div style="text-align:left;margin-top:10px">
+      <p style="font-size:.78rem;line-height:1.6;color:var(--muted)">${a.desc}</p>
+    </div>`;
+}
+renderAspectos();
 
 function diasDesdeJ2000(fecha){
   const J2000 = Date.UTC(2000,0,1,12,0,0);
   return (fecha.getTime() - J2000) / 86400000;
 }
-
 function normalizar(deg){
   deg = deg % 360;
   return deg < 0 ? deg + 360 : deg;
 }
-
 function longitudSol(n){
   const L = normalizar(280.460 + 0.9856474*n);
   const g = normalizar(357.528 + 0.9856003*n) * Math.PI/180;
   return normalizar(L + 1.915*Math.sin(g) + 0.020*Math.sin(2*g));
 }
-
 function longitudLuna(n){
   const Lp = normalizar(218.316 + 13.176396*n);
   const Mp = normalizar(134.963 + 13.064993*n) * Math.PI/180;
@@ -1287,12 +1354,10 @@ function longitudLuna(n){
 
 const SIGNOS_NOM = ['Aries','Tauro','Géminis','Cáncer','Leo','Virgo','Libra','Escorpio','Sagitario','Capricornio','Acuario','Piscis'];
 const SIGNOS_ELEM = ['Fuego','Tierra','Aire','Agua','Fuego','Tierra','Aire','Agua','Fuego','Tierra','Aire','Agua'];
-
 function signoDe(longitud){
   const idx = Math.floor(longitud/30) % 12;
   return {nombre:SIGNOS_NOM[idx], elemento:SIGNOS_ELEM[idx]};
 }
-
 function faseLunarDe(longSol, longLuna){
   const dif = normalizar(longLuna - longSol);
   if(dif < 22.5)  return {nombre:'Luna Nueva', emoji:'🌑'};
@@ -1305,53 +1370,16 @@ function faseLunarDe(longSol, longLuna){
   return {nombre:'Luna menguante', emoji:'🌘'};
 }
 
-/* =========================================================
-   2) RETRÓGRADOS — ACÁ CONFIRMÁS VOS LOS PERÍODOS REALES
-   =========================================================
-   Mirá la columna de cada planeta en tu tabla de Astrodienst:
-   donde el número viene seguido de una "R" chiquita, ahí
-   arranca el retrógrado; donde deja de aparecer la "R",
-   ahí termina. Cargá esas fechas acá abajo (formato "AAAA-MM-DD").
-
-   Mientras no las cargues, el calendario asume que no hay
-   retrógrados activos (no inventa fechas).
-   ========================================================= */
-
 const RETROGRADOS = {
-  "Mercurio": [
-    ["2026-10-24", "2026-11-13"],
-    ["2027-02-09", "2027-03-03"],
-    ["2027-06-10", "2027-07-04"],
-    ["2027-10-07", "2027-10-28"],
-  ],
-  "Venus": [
-    ["2026-10-03", "2026-11-13"],
-    // 2027: Venus no retrograda este año
-  ],
-  "Marte": [
-    ["2027-01-10", "2027-04-01"],
-  ],
-  "Júpiter": [
-    ["2026-12-12", "2027-04-12"],
-  ],
-  "Saturno": [
-    ["2026-07-26", "2026-12-10"],
-    ["2027-08-09", "2027-12-23"],
-  ],
-  "Urano": [
-    ["2026-09-10", "2027-02-08"],
-    ["2027-09-15", "2028-02-12"],
-  ],
-  "Neptuno": [
-    ["2026-07-07", "2026-12-12"],
-    ["2027-07-09", "2027-12-15"],
-  ],
-  "Plutón": [
-    ["2026-05-06", "2026-10-15"],
-    ["2027-05-08", "2027-10-17"],
-  ],
+  "Mercurio": [["2026-10-24","2026-11-13"],["2027-02-09","2027-03-03"],["2027-06-10","2027-07-04"],["2027-10-07","2027-10-28"]],
+  "Venus": [["2026-10-03","2026-11-13"]],
+  "Marte": [["2027-01-10","2027-04-01"]],
+  "Júpiter": [["2026-12-12","2027-04-12"]],
+  "Saturno": [["2026-07-26","2026-12-10"],["2027-08-09","2027-12-23"]],
+  "Urano": [["2026-09-10","2027-02-08"],["2027-09-15","2028-02-12"]],
+  "Neptuno": [["2026-07-07","2026-12-12"],["2027-07-09","2027-12-15"]],
+  "Plutón": [["2026-05-06","2026-10-15"],["2027-05-08","2027-10-17"]],
 };
-
 function retrogradosActivos(fecha){
   const t = fecha.getTime();
   const activos = [];
@@ -1366,20 +1394,8 @@ function retrogradosActivos(fecha){
   return activos;
 }
 
-/* =========================================================
-   3) INTERPRETACIONES PERSONALIZADAS (opcional, por fecha)
-   =========================================================
-   Si querés escribir una lectura especial para un día puntual
-   de una clienta (basada en su carta natal), agregala acá.
-   Si no cargás nada, el modal simplemente no muestra ese texto.
-   ========================================================= */
-const INTERPRETACIONES_PERSONALIZADAS = {
-  // "2026-07-17": "Este día activa tu Luna natal en Cáncer — momento ideal para vos en especial.",
-};
+const INTERPRETACIONES_PERSONALIZADAS = {};
 
-/* =========================================================
-   4) PLANTILLAS DE TEXTO — energía, y consejos por signo
-   ========================================================= */
 const TEXTO_FASE = {
   'Luna Nueva': 'Día de inicios. Ideal para sembrar intenciones y arrancar algo nuevo, aunque los resultados todavía no se vean.',
   'Luna creciente': 'La energía acompaña el crecimiento y la acción. Buen momento para avanzar en lo que ya empezaste.',
@@ -1392,23 +1408,20 @@ const TEXTO_FASE = {
 };
 
 const CONSEJOS = {
-  Aries:      {amor:'Impulsiva y directa; decí lo que sentís sin rodeos.', trabajo:'Buen día para iniciativas propias y liderazgo.', dinero:'Cuidado con gastos impulsivos.', salud:'Canalizá el exceso de energía con movimiento físico.'},
-  Tauro:      {amor:'Necesidad de contacto físico y estabilidad en el vínculo.', trabajo:'Constancia por sobre la velocidad; los resultados llegan igual.', dinero:'Favorable para consolidar ahorros o inversiones seguras.', salud:'Cuidar el cuerpo con placer, sin excesos alimentarios.'},
-  Géminis:    {amor:'Los vínculos se activan con la palabra; hablá lo que pensás.', trabajo:'Ideal para comunicar, negociar o aprender algo nuevo.', dinero:'Cuidado con la dispersión en gastos pequeños.', salud:'Mente acelerada; buscá una pausa consciente.'},
-  Cáncer:     {amor:'Sensibilidad alta; el hogar y la familia piden atención.', trabajo:'Cuidado del equipo por sobre la productividad individual.', dinero:'Buen día para gastos ligados al hogar.', salud:'Cuidar el sistema digestivo y las emociones represadas.'},
-  Leo:        {amor:'Necesidad de brillar y ser reconocida por el otro.', trabajo:'Buen día para mostrar tu trabajo y liderar con confianza.', dinero:'Cuidado con gastar para impresionar.', salud:'Cuidar el corazón: descanso real, no solo actividad.'},
-  Virgo:      {amor:'Cuidado con la autoexigencia hacia el vínculo.', trabajo:'Excelente para el detalle, la organización y la corrección.', dinero:'Buen día para ordenar cuentas y presupuestos.', salud:'Atención al sistema nervioso y la alimentación.'},
-  Libra:      {amor:'Búsqueda de equilibrio y armonía; evitar el "sí" por compromiso.', trabajo:'Favorable para acuerdos, mediaciones y trabajo en equipo.', dinero:'Cuidado con gastar por agradar a otros.', salud:'El bienestar emocional pide vínculos, no aislamiento.'},
-  Escorpio:   {amor:'Intensidad emocional; cuidado con el control o los celos.', trabajo:'Buen día para investigar, auditar o resolver lo pendiente.', dinero:'Cuidado con gastos impulsivos ligados a emociones intensas.', salud:'Atención a procesos de desintoxicación del cuerpo.'},
-  Sagitario:  {amor:'Necesidad de libertad; evitar sentirse encerrada en el vínculo.', trabajo:'Ideal para planificar, estudiar o proyectar a futuro.', dinero:'Cuidado con el optimismo excesivo en gastos.', salud:'Buen día para actividad física al aire libre.'},
-  Capricornio:{amor:'Se valoran los compromisos reales, no las promesas vacías.', trabajo:'Día de resultados; la disciplina se nota más que nunca.', dinero:'Favorable para decisiones serias y a largo plazo.', salud:'Cuidar huesos, articulaciones y el descanso.'},
-  Acuario:    {amor:'Necesidad de espacio e independencia en el vínculo.', trabajo:'Buen día para ideas innovadoras y proyectos grupales.', dinero:'Evitar gastos o inversiones colectivas apresuradas.', salud:'Cuidar el sistema nervioso; evitar la sobreestimulación.'},
-  Piscis:     {amor:'Alta sensibilidad; cuidado con idealizar al otro.', trabajo:'Bueno para la creatividad, no tanto para la precisión.', dinero:'No es un buen día para decisiones económicas grandes.', salud:'Priorizar el descanso y evitar excesos.'},
+  Aries:{amor:'Impulsiva y directa; decí lo que sentís sin rodeos.',trabajo:'Buen día para iniciativas propias y liderazgo.',dinero:'Cuidado con gastos impulsivos.',salud:'Canalizá el exceso de energía con movimiento físico.'},
+  Tauro:{amor:'Necesidad de contacto físico y estabilidad en el vínculo.',trabajo:'Constancia por sobre la velocidad; los resultados llegan igual.',dinero:'Favorable para consolidar ahorros o inversiones seguras.',salud:'Cuidar el cuerpo con placer, sin excesos alimentarios.'},
+  Géminis:{amor:'Los vínculos se activan con la palabra; hablá lo que pensás.',trabajo:'Ideal para comunicar, negociar o aprender algo nuevo.',dinero:'Cuidado con la dispersión en gastos pequeños.',salud:'Mente acelerada; buscá una pausa consciente.'},
+  Cáncer:{amor:'Sensibilidad alta; el hogar y la familia piden atención.',trabajo:'Cuidado del equipo por sobre la productividad individual.',dinero:'Buen día para gastos ligados al hogar.',salud:'Cuidar el sistema digestivo y las emociones represadas.'},
+  Leo:{amor:'Necesidad de brillar y ser reconocida por el otro.',trabajo:'Buen día para mostrar tu trabajo y liderar con confianza.',dinero:'Cuidado con gastar para impresionar.',salud:'Cuidar el corazón: descanso real, no solo actividad.'},
+  Virgo:{amor:'Cuidado con la autoexigencia hacia el vínculo.',trabajo:'Excelente para el detalle, la organización y la corrección.',dinero:'Buen día para ordenar cuentas y presupuestos.',salud:'Atención al sistema nervioso y la alimentación.'},
+  Libra:{amor:'Búsqueda de equilibrio y armonía; evitar el "sí" por compromiso.',trabajo:'Favorable para acuerdos, mediaciones y trabajo en equipo.',dinero:'Cuidado con gastar por agradar a otros.',salud:'El bienestar emocional pide vínculos, no aislamiento.'},
+  Escorpio:{amor:'Intensidad emocional; cuidado con el control o los celos.',trabajo:'Buen día para investigar, auditar o resolver lo pendiente.',dinero:'Cuidado con gastos impulsivos ligados a emociones intensas.',salud:'Atención a procesos de desintoxicación del cuerpo.'},
+  Sagitario:{amor:'Necesidad de libertad; evitar sentirse encerrada en el vínculo.',trabajo:'Ideal para planificar, estudiar o proyectar a futuro.',dinero:'Cuidado con el optimismo excesivo en gastos.',salud:'Buen día para actividad física al aire libre.'},
+  Capricornio:{amor:'Se valoran los compromisos reales, no las promesas vacías.',trabajo:'Día de resultados; la disciplina se nota más que nunca.',dinero:'Favorable para decisiones serias y a largo plazo.',salud:'Cuidar huesos, articulaciones y el descanso.'},
+  Acuario:{amor:'Necesidad de espacio e independencia en el vínculo.',trabajo:'Buen día para ideas innovadoras y proyectos grupales.',dinero:'Evitar gastos o inversiones colectivas apresuradas.',salud:'Cuidar el sistema nervioso; evitar la sobreestimulación.'},
+  Piscis:{amor:'Alta sensibilidad; cuidado con idealizar al otro.',trabajo:'Bueno para la creatividad, no tanto para la precisión.',dinero:'No es un buen día para decisiones económicas grandes.',salud:'Priorizar el descanso y evitar excesos.'},
 };
 
-/* =========================================================
-   5) MOTOR DE ENERGÍA — genera score, color e interpretación
-   ========================================================= */
 const SCORE_BASE_FASE = {
   'Luna Nueva': 74, 'Luna creciente': 78, 'Cuarto creciente': 62,
   'Luna gibosa creciente': 66, 'Luna Llena': 70, 'Luna gibosa menguante': 58,
@@ -1425,7 +1438,7 @@ function generarDatosDia(fecha){
 
   let score = SCORE_BASE_FASE[fase.nombre] || 60;
   score -= retro.length * 8;
-  score += (fecha.getDate() % 7) - 3; // pequeña variación día a día
+  score += (fecha.getDate() % 7) - 3;
   score = Math.max(5, Math.min(98, Math.round(score)));
 
   const consejo = CONSEJOS[signoLuna.nombre];
@@ -1444,14 +1457,10 @@ function generarDatosDia(fecha){
     interpretacionPersonal: INTERPRETACIONES_PERSONALIZADAS[claveFechaObj(fecha)] || "",
   };
 }
-
 function claveFechaObj(fecha){
   return claveFecha(fecha.getFullYear(), fecha.getMonth(), fecha.getDate());
 }
 
-/* =========================================================
-   6) ESCALA DE ENERGÍA — no hace falta tocar esto
-   ========================================================= */
 function infoScore(score){
   if(score >= 90) return {label:'Excelente', color:'var(--cal-c-excelente)', emoji:'🟢'};
   if(score >= 75) return {label:'Muy favorable', color:'var(--cal-c-favorable)', emoji:'🟢'};
@@ -1460,13 +1469,10 @@ function infoScore(score){
   return {label:'Desafiante', color:'var(--cal-c-desafiante)', emoji:'🔴'};
 }
 
-/* =========================================================
-   3) LÓGICA DEL CALENDARIO
-   ========================================================= */
 const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 const DIAS = ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
 
-let curY = 2026, curM = 6; // Julio 2026 (mes 0-indexado) — cambiar acá el mes/año inicial si hace falta
+let curY = 2026, curM = 6;
 
 function claveFecha(y,m,d){
   const mm = String(m+1).padStart(2,'0');
@@ -1530,9 +1536,6 @@ function cambiarMes(dir){
   renderCalendario();
 }
 
-/* =========================================================
-   4) MODAL
-   ========================================================= */
 function abrirModal(clave, datos){
   const overlay = document.getElementById('overlay');
   const modal = document.getElementById('modalContenido');
@@ -1540,17 +1543,6 @@ function abrirModal(clave, datos){
   const [y,m,d] = clave.split('-').map(Number);
   const fecha = new Date(y, m-1, d);
   const fechaLarga = fecha.toLocaleDateString('es-AR', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
-
-  if(!datos){
-    modal.innerHTML = `
-      <div class="modal-cerrar" onclick="cerrarModal()">✕</div>
-      <div class="modal-fecha">${d} de ${MESES[m-1]}</div>
-      <div class="modal-fecha-sub">${fechaLarga}</div>
-      <div class="sin-datos-msg">Todavía no cargaste las efemérides de este día ✦<br>Agregalas en el objeto EFEMERIDES del código.</div>
-    `;
-    overlay.classList.add('activo');
-    return;
-  }
 
   const info = infoScore(datos.score);
   const retro = datos.retrogrados.length ? datos.retrogrados.join(', ') : 'Ninguno';
@@ -1608,16 +1600,7 @@ function cerrarSiFondo(e){
 
 renderCalendario();
 
-/* =========================================================
-   7) TAROT INTERACTIVO — 78 cartas (22 Arcanos Mayores + 56 Menores)
-   =========================================================
-   Cada carta tiene: nombre, símbolo (emoji/símbolo decorativo)
-   y una lectura corta. Para editar el significado de una carta,
-   buscá su nombre acá abajo y cambiá el texto de "significado".
-   ========================================================= */
-
 const MAZO_TAROT = [
-  // --- ARCANOS MAYORES ---
   {n:'0', nombre:'El Loco', sim:'✦', significado:'Nuevos comienzos, espontaneidad, fe en dar el primer paso sin todas las respuestas.'},
   {n:'I', nombre:'El Mago', sim:'✧', significado:'Voluntad y manifestación — ya tenés las herramientas para lograrlo.'},
   {n:'II', nombre:'La Sacerdotisa', sim:'☾', significado:'Intuición y misterio. La respuesta está en tu sabiduría interior, no afuera.'},
@@ -1640,8 +1623,6 @@ const MAZO_TAROT = [
   {n:'XIX', nombre:'El Sol', sim:'☀', significado:'Alegría, claridad y éxito visible — todo se ilumina.'},
   {n:'XX', nombre:'El Juicio', sim:'♪', significado:'Un llamado interior. Renacer después de evaluar el propio camino.'},
   {n:'XXI', nombre:'El Mundo', sim:'◯', significado:'Cierre de ciclo, plenitud y logro. Una etapa que se completa.'},
-
-  // --- BASTOS (fuego / acción) ---
   {n:'As', nombre:'As de Bastos', sim:'🔥', significado:'Chispa de inspiración, un nuevo impulso creativo que arranca.'},
   {n:'2', nombre:'2 de Bastos', sim:'🔥', significado:'Planificación — mirar más allá del horizonte antes de moverte.'},
   {n:'3', nombre:'3 de Bastos', sim:'🔥', significado:'Expansión. Los primeros resultados de lo sembrado ya se ven.'},
@@ -1656,229 +1637,95 @@ const MAZO_TAROT = [
   {n:'Caballero', nombre:'Caballero de Bastos', sim:'🔥', significado:'Acción impulsiva, aventura y pasión por lo que se emprende.'},
   {n:'Reina', nombre:'Reina de Bastos', sim:'🔥', significado:'Confianza, carisma e independencia genuina.'},
   {n:'Rey', nombre:'Rey de Bastos', sim:'🔥', significado:'Liderazgo visionario con carisma maduro.'},
-
-  // --- COPAS (agua / emoción) ---
   {n:'As', nombre:'As de Copas', sim:'💧', significado:'Un nuevo comienzo emocional — el corazón se abre.'},
   {n:'2', nombre:'2 de Copas', sim:'💧', significado:'Unión y conexión mutua — una sociedad afectiva genuina.'},
   {n:'3', nombre:'3 de Copas', sim:'💧', significado:'Celebración compartida, amistad y comunidad.'},
   {n:'4', nombre:'4 de Copas', sim:'💧', significado:'Apatía o desconexión — hay una oportunidad que no se está viendo.'},
   {n:'5', nombre:'5 de Copas', sim:'💧', significado:'Duelo y pérdida — pero todavía queda algo en pie para mirar.'},
   {n:'6', nombre:'6 de Copas', sim:'💧', significado:'Nostalgia, recuerdos e inocencia de otro tiempo.'},
-  {n:'7', nombre:'7 de Copas', sim:'💧', significado:'Muchas opciones y fantasías — cuidado con perderse en la ilusión.'},
-  {n:'8', nombre:'8 de Copas', sim:'💧', significado:'Alejarse en busca de algo más profundo y verdadero.'},
-  {n:'9', nombre:'9 de Copas', sim:'💧', significado:'Satisfacción — un deseo cumplido.'},
-  {n:'10', nombre:'10 de Copas', sim:'💧', significado:'Felicidad familiar y armonía plena.'},
-  {n:'Sota', nombre:'Sota de Copas', sim:'💧', significado:'Mensajes emocionales y sensibilidad creativa.'},
-  {n:'Caballero', nombre:'Caballero de Copas', sim:'💧', significado:'Romanticismo — una propuesta que viene desde el corazón.'},
-  {n:'Reina', nombre:'Reina de Copas', sim:'💧', significado:'Empatía profunda e intuición emocional.'},
-  {n:'Rey', nombre:'Rey de Copas', sim:'💧', significado:'Equilibrio y madurez afectiva.'},
-
-  // --- ESPADAS (aire / mente) ---
-  {n:'As', nombre:'As de Espadas', sim:'⚔', significado:'Claridad mental — una verdad que corta la confusión.'},
-  {n:'2', nombre:'2 de Espadas', sim:'⚔', significado:'Indecisión. Un equilibrio tenso que evita decidir.'},
-  {n:'3', nombre:'3 de Espadas', sim:'⚔', significado:'Dolor y ruptura — una herida emocional que necesita atención.'},
-  {n:'4', nombre:'4 de Espadas', sim:'⚔', significado:'Descanso y tregua — una recuperación necesaria.'},
-  {n:'5', nombre:'5 de Espadas', sim:'⚔', significado:'Conflicto y victoria vacía — cuidado con ganar perdiendo algo más.'},
-  {n:'6', nombre:'6 de Espadas', sim:'⚔', significado:'Transición — alejarse de la turbulencia hacia aguas más calmas.'},
-  {n:'7', nombre:'7 de Espadas', sim:'⚔', significado:'Estrategia y sigilo — cuidado con el engaño, propio o ajeno.'},
-  {n:'8', nombre:'8 de Espadas', sim:'⚔', significado:'Sentirse atrapada — una limitación que es más mental que real.'},
-  {n:'9', nombre:'9 de Espadas', sim:'⚔', significado:'Ansiedad y preocupación — los miedos crecen de noche.'},
-  {n:'10', nombre:'10 de Espadas', sim:'⚔', significado:'Un final doloroso — tocar fondo es también el inicio del renacer.'},
-  {n:'Sota', nombre:'Sota de Espadas', sim:'⚔', significado:'Curiosidad mental y nuevas ideas por explorar.'},
-  {n:'Caballero', nombre:'Caballero de Espadas', sim:'⚔', significado:'Acción rápida y determinación mental.'},
-  {n:'Reina', nombre:'Reina de Espadas', sim:'⚔', significado:'Claridad e independencia — cortar con lo que ya no es verdad.'},
-  {n:'Rey', nombre:'Rey de Espadas', sim:'⚔', significado:'Autoridad intelectual y juicio justo.'},
-
-  // --- OROS (tierra / material) ---
-  {n:'As', nombre:'As de Oros', sim:'⛁', significado:'Una nueva oportunidad material — semilla de abundancia.'},
-  {n:'2', nombre:'2 de Oros', sim:'⛁', significado:'Equilibrio entre prioridades — hacer malabares con lo urgente.'},
-  {n:'3', nombre:'3 de Oros', sim:'⛁', significado:'Trabajo en equipo y habilidad reconocida.'},
-  {n:'4', nombre:'4 de Oros', sim:'⛁', significado:'Seguridad y control — cuidado con aferrarse demasiado a lo material.'},
-  {n:'5', nombre:'5 de Oros', sim:'⛁', significado:'Escasez percibida — hay ayuda disponible cerca, aunque no se vea.'},
-  {n:'6', nombre:'6 de Oros', sim:'⛁', significado:'Generosidad — dar y recibir en equilibrio.'},
-  {n:'7', nombre:'7 de Oros', sim:'⛁', significado:'Paciencia — evaluar el progreso antes de seguir invirtiendo.'},
-  {n:'8', nombre:'8 de Oros', sim:'⛁', significado:'Dedicación y perfeccionamiento del propio oficio.'},
-  {n:'9', nombre:'9 de Oros', sim:'⛁', significado:'Independencia lograda — disfrute del propio esfuerzo.'},
-  {n:'10', nombre:'10 de Oros', sim:'⛁', significado:'Legado y abundancia familiar a largo plazo.'},
-  {n:'Sota', nombre:'Sota de Oros', sim:'⛁', significado:'Un nuevo proyecto concreto — la actitud de quien aprende con dedicación.'},
-  {n:'Caballero', nombre:'Caballero de Oros', sim:'⛁', significado:'Constancia y trabajo metódico.'},
-  {n:'Reina', nombre:'Reina de Oros', sim:'⛁', significado:'Abundancia práctica y cuidado generoso.'},
-  {n:'Rey', nombre:'Rey de Oros', sim:'⛁', significado:'Éxito material consolidado, con generosidad segura.'},
+  {n:'7', nombre:'7 de Copas', sim:'💧', significado:'Muchas opciones y fantasías — cuidado con perderse en ellas.'},
 ];
-
-const POSICIONES = {
-  3: ['Pasado', 'Presente', 'Futuro'],
-  4: ['Situación', 'Desafío', 'Consejo', 'Resultado'],
-};
 
 let tiradaActual = 3;
 let cartasElegidas = [];
-let cartasReveladas = [];
 
-function barajar(array){
-  const copia = [...array];
-  for(let i = copia.length - 1; i > 0; i--){
-    const j = Math.floor(Math.random() * (i + 1));
-    [copia[i], copia[j]] = [copia[j], copia[i]];
+const POSICIONES_3 = ['Pasado','Presente','Futuro'];
+const POSICIONES_4 = ['Situación','Desafío','Consejo','Resultado'];
+
+function barajarMazo(){
+  const copia = [...MAZO_TAROT];
+  for(let i=copia.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [copia[i],copia[j]] = [copia[j],copia[i]];
   }
   return copia;
 }
 
-function elegirTirada(cantidad){
-  tiradaActual = cantidad;
-  document.getElementById('btnTirada3').classList.toggle('activa', cantidad === 3);
-  document.getElementById('btnTirada4').classList.toggle('activa', cantidad === 4);
+function elegirTirada(n){
+  tiradaActual = n;
+  document.getElementById('btnTirada3').classList.toggle('activa', n===3);
+  document.getElementById('btnTirada4').classList.toggle('activa', n===4);
 
-  const barajado = barajar(MAZO_TAROT);
-  cartasElegidas = barajado.slice(0, cantidad);
-  cartasReveladas = new Array(cantidad).fill(false);
+  const posiciones = n===3 ? POSICIONES_3 : POSICIONES_4;
+  const mazo = barajarMazo();
+  cartasElegidas = mazo.slice(0,n);
 
   const mesa = document.getElementById('cartasMesa');
   mesa.innerHTML = '';
-  const posiciones = POSICIONES[cantidad];
-
-  cartasElegidas.forEach((carta, i)=>{
+  cartasElegidas.forEach((carta,i)=>{
     const slot = document.createElement('div');
     slot.className = 'carta-slot';
-
-    const pos = document.createElement('div');
-    pos.className = 'carta-posicion';
-    pos.textContent = posiciones[i];
-    slot.appendChild(pos);
-
-    const cartaEl = document.createElement('div');
-    cartaEl.className = 'carta';
-    cartaEl.innerHTML = `
-      <div class="carta-inner">
-        <div class="carta-cara carta-dorso"><div class="carta-dorso-sim">✦</div></div>
-        <div class="carta-cara carta-frente">
-          <div class="num">${carta.n}</div>
-          <div class="sim">${carta.sim}</div>
-          <div class="nom">${carta.nombre}</div>
+    slot.innerHTML = `
+      <div class="carta-posicion">${posiciones[i]}</div>
+      <div class="carta" data-idx="${i}">
+        <div class="carta-inner">
+          <div class="carta-cara carta-dorso"><div class="carta-dorso-sim">✦</div></div>
+          <div class="carta-cara carta-frente">
+            <div class="num">${carta.n}</div>
+            <div class="sim">${carta.sim}</div>
+            <div class="nom">${carta.nombre}</div>
+          </div>
         </div>
-      </div>`;
-    cartaEl.onclick = ()=> revelarCarta(i, cartaEl);
-    slot.appendChild(cartaEl);
-
+      </div>
+    `;
     mesa.appendChild(slot);
+  });
+
+  document.querySelectorAll('.carta').forEach(el=>{
+    el.onclick = ()=> revelarCarta(el, posiciones);
   });
 
   document.getElementById('tarotResultado').classList.remove('activo');
   document.getElementById('tarotResultado').innerHTML = '';
-  document.getElementById('btnNuevaTirada').style.display = 'none';
+  document.getElementById('btnNuevaTirada').style.display = 'block';
 }
 
-function revelarCarta(i, el){
-  if(cartasReveladas[i]) return;
-  cartasReveladas[i] = true;
+function revelarCarta(el, posiciones){
+  if(el.classList.contains('girada')) return;
   el.classList.add('girada');
-  actualizarResultado();
+  actualizarResultado(posiciones);
 }
 
-function actualizarResultado(){
-  const posiciones = POSICIONES[tiradaActual];
+function actualizarResultado(posiciones){
+  const giradas = document.querySelectorAll('.carta.girada');
+  if(giradas.length === 0) return;
   const resultado = document.getElementById('tarotResultado');
-  const filas = cartasElegidas.map((carta, i)=>{
-    if(!cartasReveladas[i]) return '';
-    return `
-      <div class="tarot-resultado-fila">
-        <div class="pos">${posiciones[i]}</div>
-        <div class="info"><b>${carta.sim} ${carta.nombre}</b><p>${carta.significado}</p></div>
-      </div>`;
-  }).join('');
-
-  if(filas.trim()){
-    resultado.innerHTML = filas;
-    resultado.classList.add('activo');
-  }
-
-  if(cartasReveladas.every(r=>r)){
-    document.getElementById('btnNuevaTirada').style.display = 'block';
-  }
+  resultado.classList.add('activo');
+  resultado.innerHTML = '';
+  giradas.forEach(el=>{
+    const idx = parseInt(el.dataset.idx);
+    const carta = cartasElegidas[idx];
+    const fila = document.createElement('div');
+    fila.className = 'tarot-resultado-fila';
+    fila.innerHTML = `
+      <div class="pos">${posiciones[idx]}</div>
+      <div class="info"><b>${carta.sim} ${carta.nombre}</b><p>${carta.significado}</p></div>
+    `;
+    resultado.appendChild(fila);
+  });
 }
 
-// Iniciar con una tirada de 3 cartas por defecto
 elegirTirada(3);
-
-// --- EXPLORADOR DE CASAS DRACÓNICAS ---
-const CASAS = [
-  {num:1, personal:'Tauro 06° · Ascendente dracónico', regente:'Venus', sig:'Casa de la identidad y la apariencia.', desc:'Representa tu "yo" instintivo, tu carta de presentación, el ego y la energía con la que iniciás nuevos proyectos.'},
-  {num:2, personal:'Géminis 01°', regente:'Mercurio', sig:'Casa de los recursos y el valor propio.', desc:'Representa el dinero, las posesiones materiales y la autoestima; cómo generás recursos y qué valorás en la vida.'},
-  {num:3, personal:'Géminis 23°', regente:'Mercurio', sig:'Casa de la comunicación y el entorno cercano.', desc:'Representa la mente, los hermanos, los vecinos, los estudios básicos y la forma en que te expresás y aprendés.'},
-  {num:4, personal:'Cáncer 17°', regente:'Luna', sig:'Casa del hogar y las raíces.', desc:'Representa la familia, el hogar y la base emocional desde donde construís todo lo demás.'},
-  {num:5, personal:'Leo 15°', regente:'Sol', sig:'Casa de la creatividad y el placer.', desc:'Representa el romance, los hijos, el arte, el juego y la expresión personal más auténtica.'},
-  {num:6, personal:'Virgo 23°', regente:'Mercurio', sig:'Casa del trabajo y el cuidado del cuerpo.', desc:'Representa la rutina diaria, la salud, el servicio y la relación con lo cotidiano.'},
-  {num:7, personal:'Escorpio 06° · Sol dracónico', regente:'Marte / Plutón', sig:'Casa de los vínculos y el matrimonio.', desc:'Representa la pareja, los socios, los contratos y cómo te relacionás con el "otro".'},
-  {num:8, personal:'Sagitario 01°', regente:'Júpiter', sig:'Casa de la transformación y lo compartido.', desc:'Representa la sexualidad, la muerte simbólica, las herencias y los recursos compartidos con otros.'},
-  {num:9, personal:'Sagitario 23° · Luna dracónica', regente:'Júpiter', sig:'Casa de la expansión y la filosofía.', desc:'Representa los viajes largos, los estudios superiores, la espiritualidad y la búsqueda de sentido.'},
-  {num:10, personal:'Capricornio 17° · Medio Cielo', regente:'Saturno', sig:'Casa de la vocación y la imagen pública.', desc:'Representa la carrera, el reconocimiento social y el lugar que ocupás en el mundo.'},
-  {num:11, personal:'Acuario 15°', regente:'Saturno / Urano', sig:'Casa de los proyectos y lo colectivo.', desc:'Representa los amigos, los grupos, las esperanzas y los objetivos a futuro.'},
-  {num:12, personal:'Piscis 23°', regente:'Júpiter / Neptuno', sig:'Casa de lo oculto y el inconsciente.', desc:'Representa los miedos, los secretos, el karma pendiente y la conexión con lo espiritual y lo trascendente.'},
-];
-
-function renderCasas(){
-  const grid = document.getElementById('casasGrid');
-  CASAS.forEach((c,i)=>{
-    const btn = document.createElement('div');
-    btn.className = 'signo-btn';
-    btn.style.fontSize = '1rem';
-    btn.textContent = c.num;
-    btn.onclick = ()=> mostrarCasa(i, btn);
-    grid.appendChild(btn);
-  });
-}
-
-function mostrarCasa(i, btn){
-  document.querySelectorAll('#casasGrid .signo-btn').forEach(b=>b.classList.remove('activo'));
-  btn.classList.add('activo');
-  const c = CASAS[i];
-  const box = document.getElementById('casaResultado');
-  box.classList.remove('vacio');
-  box.innerHTML = `
-    <div class="signo-res-nombre">Casa ${c.num}</div>
-    <div style="font-size:.78rem;color:var(--vio-l);margin-bottom:4px">${c.personal}</div>
-    <div style="font-size:.7rem;color:var(--gold-l);margin-bottom:14px">Regente: ${c.regente}</div>
-    <div style="text-align:left;padding-top:12px;border-top:1px solid var(--bg4)">
-      <p style="font-size:.82rem;color:var(--gold-l);margin-bottom:6px">${c.sig}</p>
-      <p style="font-size:.78rem;line-height:1.6;color:var(--muted)">${c.desc}</p>
-    </div>`;
-}
-
-renderCasas();
-
-// --- ASPECTOS ---
-const ASPECTOS = [
-  {simbolo:'☌', nombre:'Conjunción (0°)', desc:'Dos planetas se fusionan en un mismo punto. Sus energías se combinan y se intensifican, para bien o para mal, actuando casi como una sola fuerza.'},
-  {simbolo:'⚹', nombre:'Sextil (60°)', desc:'Una oportunidad. Las energías fluyen con facilidad, pero necesitan un poco de esfuerzo consciente para activarse del todo.'},
-  {simbolo:'□', nombre:'Cuadratura (90°)', desc:'Fricción y desafío. Las dos energías chocan y generan tensión — pero esa misma tensión es la que empuja al crecimiento y a la acción.'},
-  {simbolo:'△', nombre:'Trígono (120°)', desc:'Fluidez natural. Es el aspecto más armónico: las energías corren fácil, casi como un talento innato, sin mucho esfuerzo.'},
-  {simbolo:'☍', nombre:'Oposición (180°)', desc:'Tensión y espejo. Dos energías se miran de frente, generando consciencia a través del contraste — muchas veces proyectada en el vínculo con otra persona.'},
-];
-
-function renderAspectos(){
-  const grid = document.getElementById('aspectosGrid');
-  ASPECTOS.forEach((a,i)=>{
-    const btn = document.createElement('div');
-    btn.className = 'signo-btn';
-    btn.textContent = a.simbolo;
-    btn.onclick = ()=> mostrarAspecto(i, btn);
-    grid.appendChild(btn);
-  });
-}
-
-function mostrarAspecto(i, btn){
-  document.querySelectorAll('#aspectosGrid .signo-btn').forEach(b=>b.classList.remove('activo'));
-  btn.classList.add('activo');
-  const a = ASPECTOS[i];
-  const box = document.getElementById('aspectoResultado');
-  box.classList.remove('vacio');
-  box.innerHTML = `
-    <div class="signo-res-simbolo">${a.simbolo}</div>
-    <div class="signo-res-nombre">${a.nombre}</div>
-    <p style="font-size:.82rem;line-height:1.65;color:var(--muted);margin-top:10px">${a.desc}</p>`;
-}
-
-renderAspectos();
 </script>
 </body>
 </html>
