@@ -22,13 +22,16 @@ body{font-family:'Jost',sans-serif;background:var(--deep);color:var(--text);min-
 .o1{width:550px;height:550px;background:rgba(123,94,167,.1);top:-120px;left:-180px}
 .o2{width:380px;height:380px;background:rgba(201,168,76,.07);bottom:-80px;right:-80px}
 
-/* --- UNIVERSO: planetas flotando + estrellas fugaces --- */
+/* --- UNIVERSO: planetas realistas + estrellas fugaces --- */
 #universo{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-.planeta-flot{position:absolute;border-radius:50%;animation:flotar linear infinite;}
-@keyframes flotar{
-  0%{transform:translate(0,0) rotate(0deg)}
-  50%{transform:translate(var(--dx,30px),var(--dy,-40px)) rotate(180deg)}
-  100%{transform:translate(0,0) rotate(360deg)}
+.planeta-flot{position:absolute;border-radius:50%;animation:cruzarPlaneta linear infinite;}
+.planeta-flot::after{content:'';position:absolute;inset:0;border-radius:50%;
+  box-shadow:inset -10px -10px 25px rgba(0,0,0,.55), inset 4px 4px 12px rgba(255,255,255,.08);}
+.anillo{position:absolute;border-radius:50%;border-style:solid;pointer-events:none;
+  transform:rotate(-18deg);box-sizing:border-box;}
+@keyframes cruzarPlaneta{
+  0%{transform:translate(-10vw,0) rotate(0deg)}
+  100%{transform:translate(110vw, var(--desvio,0px)) rotate(180deg)}
 }
 .fugaz{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;
   box-shadow:0 0 6px 1px #fff;opacity:0;animation:cruzar linear infinite;}
@@ -1061,11 +1064,12 @@ h1{font-family:'Playfair Display',serif;font-weight:600;font-size:clamp(1.7rem,7
 
   <div class="cierre">
     <p>"Lo que tu personalidad natal construye, tu alma dracónica lo profundiza."</p>
-    <div class="firma">Academia PsicoTranspersonal · Anna Chocobar</div>
-    <div style="margin-top:16px;display:flex;flex-wrap:wrap;justify-content:center;gap:14px;font-size:.75rem">
-      <a href="https://wa.me/5493412585119" style="color:var(--gold-l);text-decoration:none">✆ WhatsApp</a>
-      <a href="https://anachocobarlopez-dev.github.io" style="color:var(--gold-l);text-decoration:none">✦ Mi web</a>
-      <a href="https://instagram.com/academiapsicologiacoaching" style="color:var(--gold-l);text-decoration:none">◈ Instagram</a>
+    <div class="firma" style="font-size:.9rem;letter-spacing:.15em;margin-bottom:4px">Anna Chocobar</div>
+    <div style="font-size:.68rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:18px">Psicóloga · Coaching · Academia PsicoTranspersonal</div>
+    <a href="https://anachocobarlopez-dev.github.io" style="display:inline-block;padding:10px 26px;border:1px solid var(--gold);border-radius:20px;color:var(--gold-l);text-decoration:none;font-size:.8rem;letter-spacing:.05em;margin-bottom:16px">✦ Reservar turno / Ver mi web</a>
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:16px;font-size:.72rem">
+      <a href="https://wa.me/5493412585119" style="color:var(--muted);text-decoration:none">✆ WhatsApp</a>
+      <a href="https://instagram.com/academiapsicologiacoaching" style="color:var(--muted);text-decoration:none">◈ Instagram</a>
     </div>
   </div>
 
@@ -1130,32 +1134,67 @@ h1{font-family:'Playfair Display',serif;font-weight:600;font-size:clamp(1.7rem,7
   }
 })();
 
-/* --- Universo cósmico: planetas flotando + estrellas fugaces --- */
+/* --- Universo cósmico: planetas realistas cruzando la pantalla + estrellas fugaces --- */
 (function(){
   const u = document.getElementById('universo');
-  const coloresPlaneta = [
-    'radial-gradient(circle at 30% 30%, #E2C47A, #9C7A2C)',
-    'radial-gradient(circle at 30% 30%, #A882D4, #4B3572)',
-    'radial-gradient(circle at 30% 30%, #C47A9E, #6E3A50)',
-    'radial-gradient(circle at 30% 30%, #7BA8D4, #2C4E72)',
-    'radial-gradient(circle at 30% 30%, #E8E8E8, #8A8A9A)'
+
+  // Cada "planeta" tiene un degradé que imita su textura real
+  const TIPOS_PLANETA = [
+    { // Júpiter — bandas cálidas
+      fondo:'radial-gradient(circle at 32% 28%, #E8C99A, #C99A5C 35%, #8B5E2E 65%, #5C3A1E)',
+      anillo:false, sizeMin:34, sizeMax:56
+    },
+    { // Saturno — con anillo
+      fondo:'radial-gradient(circle at 32% 28%, #F0DFAE, #D4B36A 40%, #9C7A3E 70%, #6B4E28)',
+      anillo:true, colorAnillo:'rgba(216,190,140,.55)', sizeMin:26, sizeMax:42
+    },
+    { // Marte — rojizo
+      fondo:'radial-gradient(circle at 32% 28%, #E68A5C, #B8502E 45%, #7A2E18 75%, #4A1B0E)',
+      anillo:false, sizeMin:12, sizeMax:22
+    },
+    { // Neptuno — azul intenso
+      fondo:'radial-gradient(circle at 32% 28%, #6FA8D8, #3868A8 45%, #1E3E70 75%, #0F2244)',
+      anillo:false, sizeMin:16, sizeMax:28
+    },
+    { // Tierra — azul y verde
+      fondo:'radial-gradient(circle at 32% 28%, #7EC8E3, #3E7EA8 35%, #2E6E4E 55%, #1A3E5A 80%)',
+      anillo:false, sizeMin:14, sizeMax:24
+    },
+    { // Luna / rocoso gris
+      fondo:'radial-gradient(circle at 32% 28%, #C9C9CE, #8E8E96 45%, #55555E 75%, #2E2E34)',
+      anillo:false, sizeMin:9, sizeMax:16
+    },
   ];
-  const nPlanetas = 6;
+
+  const nPlanetas = 7;
   for(let i=0;i<nPlanetas;i++){
-    const p = document.createElement('div');
-    p.className = 'planeta-flot';
-    const size = 10 + Math.random()*26;
-    const top = Math.random()*90;
-    const left = Math.random()*90;
-    const dx = (Math.random()*80-40).toFixed(0)+'px';
-    const dy = (Math.random()*80-40).toFixed(0)+'px';
-    const dur = 18 + Math.random()*22;
-    const delay = -Math.random()*20;
-    const color = coloresPlaneta[i % coloresPlaneta.length];
-    p.style.cssText = `width:${size}px;height:${size}px;top:${top}%;left:${left}%;background:${color};
-      box-shadow:0 0 ${size*0.9}px ${size*0.25}px rgba(201,168,76,.28), inset -4px -4px ${size*0.4}px rgba(0,0,0,.45);
-      --dx:${dx};--dy:${dy};animation-duration:${dur}s;animation-delay:${delay}s;opacity:${0.55+Math.random()*0.35}`;
-    u.appendChild(p);
+    const tipo = TIPOS_PLANETA[i % TIPOS_PLANETA.length];
+    const size = tipo.sizeMin + Math.random()*(tipo.sizeMax - tipo.sizeMin);
+    const top = Math.random()*85;
+    const desvio = (Math.random()*60-30).toFixed(0)+'px';
+    const dur = 26 + Math.random()*26; // más lento = más real
+    const delay = -Math.random()*40;
+    const opacidad = 0.75 + Math.random()*0.2;
+    const invertido = Math.random() > 0.5;
+
+    const wrap = document.createElement('div');
+    wrap.className = 'planeta-flot';
+    wrap.style.cssText = `width:${size}px;height:${size}px;top:${top}%;left:0;background:${tipo.fondo};
+      box-shadow:0 0 ${size*0.6}px ${size*0.12}px rgba(201,168,76,.18);
+      --desvio:${desvio};animation-duration:${dur}s;animation-delay:${delay}s;opacity:${opacidad};
+      animation-direction:${invertido?'reverse':'normal'}`;
+
+    if(tipo.anillo){
+      const anillo = document.createElement('div');
+      const ringSize = size*1.9;
+      anillo.className = 'anillo';
+      anillo.style.cssText = `width:${ringSize}px;height:${ringSize*0.34}px;
+        left:${(size-ringSize)/2}px;top:${(size-ringSize*0.34)/2}px;
+        border-width:${Math.max(2,size*0.07)}px;border-color:${tipo.colorAnillo};
+        opacity:.85;z-index:-1`;
+      wrap.appendChild(anillo);
+    }
+    u.appendChild(wrap);
   }
 
   const nFugaces = 5;
